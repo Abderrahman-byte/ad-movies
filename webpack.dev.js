@@ -1,13 +1,11 @@
-const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path")
+const { merge } = require('webpack-merge')
+const common = require('./webpack.common')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = {
+module.exports = merge(common, {
     mode: "development",
     devtool: "source-map",
-    entry: {
-        jquery: "./src/js/vendor.js",
-        main: "./src/js/index.js"
-    },
 
     output: {
         filename: "[name].js",
@@ -16,8 +14,9 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-        template: "./index.html"
-    })],
+            template: "./src/index.html",
+        })
+    ],
 
     module: {
         rules: [
@@ -45,21 +44,7 @@ module.exports = {
                     }, 
                     "sass-loader"
                 ]
-            },
-            {
-                test: /\.html$/,
-                use: ["html-loader"]
-            },
-            {
-                test: /\.(svg|png|jpg|gif)$/,
-                use: {
-                    loader: "file-loader",
-                    options: {
-                        name: "[name].[ext]",
-                        outputPath : "img"
-                    }
-                }
-            }  
+            }
         ]
     }
-};
+})

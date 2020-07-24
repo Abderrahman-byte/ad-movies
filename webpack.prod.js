@@ -1,17 +1,15 @@
-const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const miniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require("path")
+const { merge } = require('webpack-merge')
+const common = require('./webpack.common')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const miniCssExtractPlugin = require("mini-css-extract-plugin")
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const TerserPlugin = require('terser-webpack-plugin')
 
-module.exports = {
+module.exports = merge(common, {
     mode: "production",
-    entry :{
-        jquery: "./src/js/vendor.js",
-        polyfill: "babel-polyfill",
-        main: "./src/js/index.js"
-    },
+    
     output: {
         filename: "[name].bundle.[contentHash].js",
         path: path.resolve(__dirname, "build")
@@ -19,7 +17,7 @@ module.exports = {
 
     optimization: {
         minimizer: [new OptimizeCssAssetsPlugin(), new TerserPlugin(), new HtmlWebpackPlugin({
-            template: "./index.html",
+            template: "./src/index.html",
             minify: {
                 removeAttributeQuotes: true,
                 removeComments: true,
@@ -47,12 +45,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                  loader: "babel-loader",
-                  options: {
-                    presets: ["@babel/preset-env"]
-                  }
-                }
+                use: "babel-loader"
             }, 
             {
                 test: /\.s[ac]ss$/,
@@ -61,21 +54,7 @@ module.exports = {
                     "css-loader", 
                     "sass-loader"
                 ]
-            },
-            {
-                test: /\.html$/,
-                use: ["html-loader"]
-            },
-            {
-                test: /\.(svg|jpg|png|gif)$/,
-                use: {
-                    loader: "file-loader",
-                    options:{ 
-                        name: "[hash].[ext]",
-                        outputPath: "imgs"
-                    }
-                }
-            } 
+            }
         ]
     }
-};
+})
