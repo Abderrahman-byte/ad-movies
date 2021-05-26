@@ -23,7 +23,7 @@ body, html {
     width: 100%;
     height: 100%;
 
-    background: url('../assets/140922202605-08-pulp-fiction-story-top.jpg');
+    /* background: url('../assets/140922202605-08-pulp-fiction-story-top.jpg'); */
     background-size: cover !important;
     background-attachment: fixed !important;
     background-repeat: no-repeat !important;
