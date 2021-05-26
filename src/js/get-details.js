@@ -18,10 +18,10 @@ export const getDetailsMovie = (e) => {
     }
 
     ajaxGet(urlTo)
-    .then((e) => {
-        console.log(e)
-        return e;
-    })
+    // .then((e) => {
+    //     console.log(e)
+    //     return e;
+    // })
     .then((e) => {
         selectDiv.style.background = `url('https://image.tmdb.org/t/p/w500${e.backdrop_path}')`;
         selectDiv.style.display = "flex";
