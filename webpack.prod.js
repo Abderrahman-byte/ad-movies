@@ -12,13 +12,15 @@ module.exports = merge(common, {
     
     output: {
         filename: "[name].bundle.[contentHash].js",
-        path: path.resolve(__dirname, "build")
+        path: path.resolve(__dirname, "build/static"),
+        publicPath: '/static/'
     },
 
     optimization: {
         minimizer: [new OptimizeCssAssetsPlugin(), new TerserPlugin(), new HtmlWebpackPlugin({
             template: "./src/index.html",
             favicon: "./src/assets/favicon.ico",
+            filename: path.resolve(__dirname, "build/index.html"),
             minify: {
                 removeAttributeQuotes: true,
                 removeComments: true,
@@ -31,7 +33,7 @@ module.exports = merge(common, {
         new miniCssExtractPlugin({
             filename: "[name].[contentHash].css"
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
     ],
 
     module: {
